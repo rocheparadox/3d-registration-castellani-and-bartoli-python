@@ -5,7 +5,7 @@ import numpy as np
 import math
 import os
 
-PLOTS_DIR = 'plots'
+PLOTS_DIR = '../plots'
 
 
 def create_rectangle_points(length, width, start_at=(1, 1)):
@@ -183,10 +183,4 @@ def apply_transformation(matrix, rotation, translation):
     return np.matmul(rotation, matrix) + translation
 
 
-def clean_plots_dir():
-    if os.path.exists(PLOTS_DIR):
-        for _file in os.listdir(PLOTS_DIR):
-            os.remove(os.path.join(PLOTS_DIR, _file))
-    else:
-        os.mkdir(PLOTS_DIR)
 
