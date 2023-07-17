@@ -164,11 +164,13 @@ def get_square_error_for_angle(angle, r_vector, rho_vector, alpha, beta):
 
 
 def calculate_euclidean_distance(point1, point2):
-    return math.sqrt((point1[0]-point2[0])**2 + (point1[1]-point2[1])**2)
+    #print(f'calculate_euclidean between {point1} and {point2}')
+    return math.sqrt((point1[0]-point2[0])**2 + (point1[1]-point2[1])**2 + (point1[2]-point2[2])**2)
 
 
-def calculate_cross_covariance_matrix(data, correspondences):
-    model_mean = calculate_centroid(correspondences)
+def calculate_cross_covariance_matrix(data, correspondences, model_mean=None):
+    if model_mean is None:
+        model_mean = calculate_centroid(correspondences)
     data_mean = calculate_centroid(data)
     meaned_data = data - data_mean
     meaned_correspondences = correspondences - model_mean
