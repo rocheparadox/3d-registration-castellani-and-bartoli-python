@@ -32,25 +32,35 @@ def plot_3d_model_and_data(model_view, data_view, save_figure=False, figure_name
     ax.set_xlabel('x axis')
     ax.set_ylabel('y axis')
     ax.set_zlabel('z axis')
-    ax.axes.set_xlim3d(-30, 30)
-    ax.axes.set_ylim3d(0, 60)
-    ax.axes.set_zlim3d(-30, 30)
+
+    xmin_lim = -0.1
+    xmax_lim = 0.07
+    ymin_lim = 0.03
+    ymax_lim = 0.19
+    zmin_lim = -0.06
+    zmax_lim = 0.07
+
+    ax.axes.set_xlim3d(xmin_lim, xmax_lim)
+    ax.axes.set_ylim3d(ymin_lim, ymax_lim)
+    ax.axes.set_zlim3d(zmin_lim, zmax_lim)
 
     for datapoint in numpy.transpose(model_view):
         ax.scatter(datapoint[0], datapoint[1], datapoint[2], color='blue')
-        ax.plot(datapoint[0], datapoint[1], datapoint[2])
+        # ax.plot(datapoint[0], datapoint[1], datapoint[2])
     for datapoint in numpy.transpose(data_view):
         ax.scatter(datapoint[0], datapoint[1], datapoint[2], color='orange')
-        ax.plot(datapoint[0], datapoint[1], datapoint[2])
+        # ax.plot(datapoint[0], datapoint[1], datapoint[2])
+
+    elev = 7  # 45.9
+    azim = 18  # 47.65
+    roll = 2
+    ax.view_init(elev=elev, azim=azim, roll=roll, vertical_axis='y')
+    
     if title is not None:
         pyplot.title(title)
     if not save_figure:
         pyplot.show()
     else:
-        elev = 10
-        azim = -40
-        roll = 0
-        ax.view_init(elev, azim, roll, vertical_axis='z')
         pyplot.savefig(figure_name, dpi=dpi)
     pyplot.clf()
 

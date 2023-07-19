@@ -1,6 +1,5 @@
 # Author : Roche Christopher
 # 23/05/23 - 16:34:27
-import numpy
 import numpy as np
 import math
 import os
@@ -175,7 +174,7 @@ def calculate_cross_covariance_matrix(data, correspondences, model_mean=None):
     meaned_data = data - data_mean
     meaned_correspondences = correspondences - model_mean
 
-    cross_cov_mat = numpy.matmul(meaned_data, np.transpose(meaned_correspondences))
+    cross_cov_mat = np.matmul(meaned_data, np.transpose(meaned_correspondences))
     print(f'Cross covariance matrix is {cross_cov_mat}')
 
     return cross_cov_mat

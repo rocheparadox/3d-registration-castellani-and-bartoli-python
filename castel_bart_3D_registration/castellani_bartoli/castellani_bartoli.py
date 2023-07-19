@@ -70,7 +70,7 @@ def registration(model_view, data_view, show_plot=False, save_figure=True, two_d
             else:
                 plot_utils.plot_3d_model_and_data(model_view, data_view,
                                                   figure_name=f'{os.path.join(PLOTS_DIR, "iteration"+str(iteration)+".png" )}',
-                                                  title=f'iteration {iteration}', save_figure=save_figure, dpi=300)
+                                                  title=f'iteration {iteration}', save_figure=save_figure, dpi=500)
 
         #print(f'Find sse  for {altered_data} and {model} ')
         sse = error_icp(data_view, model_view)
