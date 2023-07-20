@@ -23,3 +23,17 @@ cd demo && python3 three_dimension_registration_demo.py
 
 ### 3D registration demo output
 <img src=".readme_support_docs/3d_registration.gif">
+
+## 3D registration demo - stanford bunny
+[Stanford bunny](http://graphics.stanford.edu/data/3Dscanrep/) model is an open source point cloud scan of a 
+[bunny statue](http://graphics.stanford.edu/data/3Dscanrep/stanford-bunny-cebal-ssh.jpg). The point clouds are available 
+in four resolutions containing 453, 1889, 8171 and 35947 points.
+
+```bash
+cd demo && python3 three_dimension_registration_demo.py --stanford-bunny
+```
+
+### 3D registration demo - stanford bunny output
+The point cloud with 1889 points are used as the input for this demo.
+
+<img src=".readme_support_docs/bunny_res3.gif">

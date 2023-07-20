@@ -1,11 +1,12 @@
 # Author : Roche Christopher
 # 13/07/23 - 19:15:43
-
+import argparse
 import sys
 
 sys.path.insert(1, '../')
 
 from plyfile import PlyData, PlyElement
+from argparse import ArgumentParser
 
 from castel_bart_3D_registration.castellani_bartoli.castellani_bartoli import registration
 from castel_bart_3D_registration.utils.file_utils import clean_plots_dir
@@ -37,6 +38,11 @@ if __name__ == '__main__':
     clean_plots_dir()
     print('Done cleaning plots directory')
 
+    parser = ArgumentParser()
+    parser.add_argument('--stanford-bunny', action='store_true')
+    args = parser.parse_args()
+    use_bunny_model = args.stanford_bunny
+
     if use_bunny_model:
         model = get_stanford_bunny_poincloud()
     else:
@@ -54,8 +60,11 @@ if __name__ == '__main__':
     altered_data = translate_matrix(altered_data, 15, 12, 16)
 
     # plot_3d_model_and_data(model, altered_data)
+    if use_bunny_model:
+        rotation_matrix, translational_matrix = registration(model, altered_data, save_figure=True, show_plot=False)
+    else:
+        rotation_matrix, translational_matrix = registration(model, altered_data, save_figure=True, show_plot=False)
 
-    rotation_matrix, translational_matrix = registration(model, altered_data, save_figure=True, show_plot=False)
     print(f"The icp rotation and translation matrices are {rotation_matrix} and {translational_matrix}")
     # redefined_view = apply_transformation(altered_data, rotation_matrix, translational_matrix)
     #
