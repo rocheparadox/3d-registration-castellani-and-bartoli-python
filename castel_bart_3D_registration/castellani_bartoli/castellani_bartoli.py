@@ -79,7 +79,9 @@ def registration(model_view, data_view, show_plot=False, save_figure=True, two_d
         # print(f'The correspondences are {correspondences}')
 
         cross_cov_mat = calculate_cross_covariance_matrix(data_view, correspondences)
+        print(f"Cross covariance is {cross_cov_mat}")
         u, s, v_transpose = np.linalg.svd(cross_cov_mat)
+        print(f'****svd::: u -> {u}, s -> {s}, v -> {v_transpose}')
         v = np.transpose(v_transpose)
         u_transpose = np.transpose(u)
         det_u_dot_det_v = np.linalg.det(u) * np.linalg.det(v)
@@ -106,18 +108,31 @@ def registration(model_view, data_view, show_plot=False, save_figure=True, two_d
         data_view_mean = calculate_centroid(data_view)
 
         # calculate the correspondence using ICP
+        # for index, datapoint in enumerate(np.transpose(data_view)):
+        #     closest_point = None
+        #     minimum_ssm = None
+        #     datapoint = datapoint.reshape((3, 1))
+        #     #print(f'To find the distance for datapoint {datapoint}')
+        #     for model_point in np.transpose(model_view):
+        #         model_point = model_point.reshape((3, 1))
+        #         error = (np.matmul(rotation_matrix, datapoint) + translation_matrix) - model_point
+        #         ssm = float(error[0]**2 + error[1]**2 + error[2]**2)
+        #         #print(f'The ssm for {model_point} and {datapoint} is {ssm}')
+        #         if minimum_ssm is None or minimum_ssm > ssm:
+        #             minimum_ssm = ssm
+        #             closest_point = model_point
+        #     correspondences[:, index] = np.transpose(closest_point)
+        # iteration += 1
+
         for index, datapoint in enumerate(np.transpose(data_view)):
             closest_point = None
-            minimum_ssm = None
-            datapoint = datapoint.reshape((3, 1))
-            #print(f'To find the distance for datapoint {datapoint}')
+            minimum_distance = None
+            # print(f'To find the distance for datapoint {datapoint}')
             for model_point in np.transpose(model_view):
-                model_point = model_point.reshape((3, 1))
-                error = (np.matmul(rotation_matrix, datapoint) + translation_matrix) - model_point
-                ssm = float(error[0]**2 + error[1]**2 + error[2]**2)
-                #print(f'The ssm for {model_point} and {datapoint} is {ssm}')
-                if minimum_ssm is None or minimum_ssm > ssm:
-                    minimum_ssm = ssm
+                distance = calculate_euclidean_distance(datapoint, model_point)
+                # print(f'The distance between {model_point} and {datapoint} is {distance}')
+                if minimum_distance is None or minimum_distance > distance:
+                    minimum_distance = distance
                     closest_point = model_point
             correspondences[:, index] = np.transpose(closest_point)
         iteration += 1
